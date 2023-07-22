@@ -1,16 +1,20 @@
-import React from 'react';
-import {Button, View} from 'react-native';
+import {View, Text, StyleSheet, Button} from 'react-native';
+import React, {useState} from 'react';
 
-function App() {
+export default function App() {
+  const [name, setName] = useState('Rohit Kumar');
+
   return (
     <View>
-      <Button
-        title="Press Here"
-        onPress={() => console.warn('Function Called')}
-        color={'#7F00FF'}
-      />
+      <Text style={styles.name}> {name}</Text>
+      <Button title="Press Here" onPress={() => setName('Ricky')} />
     </View>
   );
 }
 
-export default App;
+const styles = StyleSheet.create({
+  name: {
+    fontSize: 30,
+    color: '#2A878F',
+  },
+});
