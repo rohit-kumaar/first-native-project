@@ -1,12 +1,14 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-import Home from './components/Home/Home';
+import {Button, View} from 'react-native';
 
 function App() {
   return (
     <View>
-      <Text style={{color: 'red', fontSize: 30}}>App component</Text>
-      <Home />
+      <Button
+        title="Press Here"
+        onPress={() => console.warn('Function Called')}
+        color={'#7F00FF'}
+      />
     </View>
   );
 }
