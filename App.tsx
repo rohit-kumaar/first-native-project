@@ -1,20 +1,13 @@
 import {View, Text, StyleSheet, Button} from 'react-native';
 import React, {useState} from 'react';
+import Home from './components/Home/Home';
 
 export default function App() {
-  const [name, setName] = useState('Rohit Kumar');
-
+  const [name, setName] = useState('Batman');
   return (
     <View>
-      <Text style={styles.name}> {name}</Text>
-      <Button title="Press Here" onPress={() => setName('Ricky')} />
+      <Button title="Update Props" onPress={() => setName('Bruce Wayne')} />
+      <Home name={name} />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  name: {
-    fontSize: 30,
-    color: '#2A878F',
-  },
-});
