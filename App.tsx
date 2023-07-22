@@ -1,8 +1,13 @@
 import React from 'react';
-import {Text} from 'react-native';
+import {Button, Text, View} from 'react-native';
 
 function App() {
-  return <Text style={{fontSize: 30, color: 'red'}}>Rohit Kumar</Text>;
+  return (
+    <View>
+      <Text style={{color: 'red', fontSize: 30}}>This is text component</Text>
+      <Button title="Press Here" />
+    </View>
+  );
 }
 
 export default App;
