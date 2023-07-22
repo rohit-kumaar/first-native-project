@@ -1,24 +1,85 @@
-import {View, Text, StyleSheet, TextInput, Button} from 'react-native';
 import React, {useState} from 'react';
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 export default function App() {
-  const [name, setName] = useState('Rohit Kumar');
+  const [user, setUser] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
+  const [userData, setUserData] = useState(false);
+
+  const handleChange = (name: any, value: any) => {
+    setUser(prev => ({...prev, [name]: value}));
+  };
+
+  const resetFields = () => {
+    setUserData(false);
+    setUser({
+      name: '',
+      email: '',
+      password: '',
+    });
+  };
 
   return (
-    <View>
-      <Text style={styles.name}>Name : {name}</Text>
+    <View style={styles.container}>
+      <Text style={styles.name}>Form</Text>
       <TextInput
         style={styles.input}
         placeholder="Enter Your Name"
-        onChangeText={value => setName(value)}
-        value={name}
+        onChangeText={value => handleChange('name', value)}
+        value={user.name}
       />
-      <Button title="Clear Input Field" onPress={() => setName('')} />
+      <TextInput
+        style={styles.input}
+        placeholder="Enter Your Email"
+        onChangeText={value => handleChange('email', value)}
+        value={user.email}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Enter Your Password"
+        onChangeText={value => handleChange('password', value)}
+        value={user.password}
+        secureTextEntry={true}
+      />
+
+      <TouchableOpacity style={styles.buttonContainer}>
+        <Button title="Submit" onPress={() => setUserData(true)} />
+      </TouchableOpacity>
+
+      <TouchableOpacity>
+        <Button title="Clear" onPress={resetFields} />
+      </TouchableOpacity>
+
+      <View>
+        {userData ? (
+          <View>
+            <Text style={styles.userData}>User Name : {user.name}</Text>
+            <Text style={styles.userData}>User Email : {user.email}</Text>
+            <Text style={styles.userData}>User Password : {user.password}</Text>
+          </View>
+        ) : null}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    width: 'auto',
+    paddingHorizontal: 15,
+    marginHorizontal: 'auto',
+  },
+
   name: {
     fontSize: 30,
     color: '#0e2431',
@@ -28,8 +89,15 @@ const styles = StyleSheet.create({
     padding: 15,
     borderColor: '#000000',
     borderWidth: 1,
-    marginTop: 10,
+    marginVertical: 10,
+    fontSize: 20,
+  },
+
+  buttonContainer: {
     marginBottom: 10,
+  },
+
+  userData: {
     fontSize: 20,
   },
 });
