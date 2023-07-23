@@ -52,13 +52,15 @@ export default function App() {
         secureTextEntry={true}
       />
 
-      <TouchableOpacity style={styles.buttonContainer}>
-        <Button title="Submit" onPress={() => setUserData(true)} />
-      </TouchableOpacity>
+      <View style={styles.button_wrapper}>
+        <TouchableOpacity style={styles.buttonContainer}>
+          <Button title="Submit" onPress={() => setUserData(true)} />
+        </TouchableOpacity>
 
-      <TouchableOpacity>
-        <Button title="Clear" onPress={resetFields} />
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonContainer}>
+          <Button title="Clear" onPress={resetFields} />
+        </TouchableOpacity>
+      </View>
 
       <View>
         {userData ? (
@@ -93,7 +95,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
 
+  button_wrapper: {
+    flexDirection: 'row',
+    gap: 20,
+  },
+
   buttonContainer: {
+    flex: 1,
     marginBottom: 10,
   },
 
