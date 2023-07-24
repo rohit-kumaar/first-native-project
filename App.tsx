@@ -1,118 +1,43 @@
 import React from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {SectionList, StyleSheet, Text, View} from 'react-native';
 
 const users = [
   {
     id: 1,
     name: 'Rohit Kumar',
-    email: 'rohit@gmail.com',
+    data: ['Hamirpur', 'EEE', 'IT'],
   },
   {
     id: 2,
     name: 'Bibhu Prasad',
-    email: 'bibhu@gmail.com',
+    data: ['Koelnagar', 'EEE', 'IT'],
   },
   {
     id: 3,
     name: 'Lalit Kumar',
-    email: 'lalit@gmail.com',
-  },
-  {
-    id: 11,
-    name: 'Rohit Kumar',
-    email: 'rohit@gmail.com',
-  },
-  {
-    id: 12,
-    name: 'Bibhu Prasad',
-    email: 'bibhu@gmail.com',
-  },
-  {
-    id: 13,
-    name: 'Lalit Kumar',
-    email: 'lalit@gmail.com',
-  },
-  {
-    id: 21,
-    name: 'Rohit Kumar',
-    email: 'rohit@gmail.com',
-  },
-  {
-    id: 22,
-    name: 'Bibhu Prasad',
-    email: 'bibhu@gmail.com',
-  },
-  {
-    id: 23,
-    name: 'Lalit Kumar',
-    email: 'lalit@gmail.com',
-  },
-  {
-    id: 31,
-    name: 'Rohit Kumar',
-    email: 'rohit@gmail.com',
-  },
-  {
-    id: 32,
-    name: 'Bibhu Prasad',
-    email: 'bibhu@gmail.com',
-  },
-  {
-    id: 33,
-    name: 'Lalit Kumar',
-    email: 'lalit@gmail.com',
-  },
-  {
-    id: 41,
-    name: 'Rohit Kumar',
-    email: 'rohit@gmail.com',
-  },
-  {
-    id: 42,
-    name: 'Bibhu Prasad',
-    email: 'bibhu@gmail.com',
-  },
-  {
-    id: 43,
-    name: 'Lalit Kumar',
-    email: 'lalit@gmail.com',
-  },
-  {
-    id: 51,
-    name: 'Rohit Kumar',
-    email: 'rohit@gmail.com',
-  },
-  {
-    id: 52,
-    name: 'Bibhu Prasad',
-    email: 'bibhu@gmail.com',
-  },
-  {
-    id: 53,
-    name: 'Lalit Kumar',
-    email: 'lalit@gmail.com',
+    data: ['Sec-19', 'EEE', 'IT'],
   },
 ];
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Loop With Flat List</Text>
-      <FlatList data={users} renderItem={({item}) => <User item={item} />} />
+      <Text style={styles.title}>Section List</Text>
+
+      <SectionList
+        sections={users}
+        renderItem={({item}) => (
+          <View style={styles.user_wrapper}>
+            <Text>{item}</Text>
+          </View>
+        )}
+        renderSectionHeader={({section: {name}}) => (
+          <Text style={styles.title}>{name}</Text>
+        )}
+      />
     </View>
   );
 }
-
-const User = (props: any) => {
-  const item = props.item;
-
-  return (
-    <View style={styles.user_wrapper}>
-      <Text style={styles.text}>{item.name}</Text>
-      <Text style={styles.text}>{item.email}</Text>
-    </View>
-  );
-};
 
 const styles = StyleSheet.create({
   container: {
