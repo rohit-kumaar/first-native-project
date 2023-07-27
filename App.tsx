@@ -1,37 +1,19 @@
-import React, {useEffect, useState} from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
+const myImg = require('./assets/rohit.jpeg');
 
 export default function App() {
-  const [Toggle, setToggle] = useState(true);
-
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Component Did Update</Text>
-      <Button
-        title={`Toggle component is : ${Toggle ? 'Visible' : 'Hidden'}`}
-        onPress={() => setToggle(!Toggle)}
-      />
+      {/* <Image source={myImg} style={styles.myImg} />
+      <Image source={{uri: 'https://picsum.photos/300'}} style={styles.myImg} /> */}
 
-      {Toggle ? <User /> : null}
+      <ImageBackground source={myImg} style={{flex: 1}}>
+        <Text>Rohit Kumar</Text>
+      </ImageBackground>
     </View>
   );
 }
-
-const User = () => {
-  const timer = setInterval(() => {
-    console.warn('Set Interval Is Running');
-  }, 3000);
-
-  useEffect(() => {
-    return () => clearInterval(timer);
-  });
-
-  return (
-    <View style={styles.userComp}>
-      <Text style={styles.userCompText}>User Component</Text>
-    </View>
-  );
-};
 
 const styles = StyleSheet.create({
   container: {
@@ -40,21 +22,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'plum',
   },
 
-  header: {
-    marginBottom: 20,
-    fontSize: 30,
-    textAlign: 'center',
-    textTransform: 'uppercase',
-    textDecorationLine: 'underline',
-  },
-
-  userComp: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 20,
-  },
-
-  userCompText: {
-    fontSize: 20,
+  myImg: {
+    width: 300,
+    height: 300,
   },
 });
