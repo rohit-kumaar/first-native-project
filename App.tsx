@@ -1,17 +1,23 @@
 import React, {useState} from 'react';
-import {ActivityIndicator, Button, StyleSheet, Text, View} from 'react-native';
+import {Button, Modal, StyleSheet, Text, View} from 'react-native';
 
 export default function App() {
-  const [toggle, setToggle] = useState(true);
-
-  const handleHide = () => {
-    setToggle(false);
-  };
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <View style={styles.container}>
-      <ActivityIndicator size={100} color="#0A2A3A" animating={toggle} />
-      <Button title="Hide Loader" onPress={handleHide} />
+      <Modal transparent={true} visible={showModal} animationType="slide">
+        <View style={styles.modalWrapper}>
+          <View style={styles.modalContent}>
+            <Text>Modal Content</Text>
+            <Button title="Close Modal" onPress={() => setShowModal(false)} />
+          </View>
+        </View>
+      </Modal>
+
+      <View style={styles.btnWrapper}>
+        <Button title="Open Modal" onPress={() => setShowModal(true)} />
+      </View>
     </View>
   );
 }
@@ -19,7 +25,25 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+
+  btnWrapper: {
+    flex: 1,
+    justifyContent: 'flex-end',
+  },
+
+  modal: {},
+  modalWrapper: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  modalContent: {
+    alignItems: 'center',
+    gap: 10,
+    padding: 40,
+    borderRadius: 10,
+    backgroundColor: '#ffffff',
+    shadowColor: 'black',
   },
 });
