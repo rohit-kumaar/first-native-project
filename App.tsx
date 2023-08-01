@@ -2,31 +2,41 @@ import React, {useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 export default function App() {
+  const technology = [
+    {
+      id: 1,
+      name: 'Javascript',
+    },
+    {
+      id: 2,
+      name: 'React JS',
+    },
+    {
+      id: 3,
+      name: 'React Native',
+    },
+    {
+      id: 4,
+      name: 'Express JS',
+    },
+  ];
+
   const [selected, setSelected] = useState(1);
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => setSelected(1)}>
-        <View style={styles.radioWrapper}>
-          <View style={styles.radioBtn}>
-            {selected === 1 ? (
-              <View style={styles.radioBtnInnerStyle}></View>
-            ) : null}
+      {technology.map((tech, index) => (
+        <TouchableOpacity key={tech.id} onPress={() => setSelected(tech.id)}>
+          <View style={styles.radioWrapper}>
+            <View style={styles.radioBtn}>
+              {selected === tech.id ? (
+                <View style={styles.radioBtnInnerStyle}></View>
+              ) : null}
+            </View>
+            <Text style={styles.radioText}>{tech.name}</Text>
           </View>
-          <Text style={styles.radioText}>Radio 1</Text>
-        </View>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={() => setSelected(2)}>
-        <View style={styles.radioWrapper}>
-          <View style={styles.radioBtn}>
-            {selected === 2 ? (
-              <View style={styles.radioBtnInnerStyle}></View>
-            ) : null}
-          </View>
-          <Text style={styles.radioText}>Radio 2</Text>
-        </View>
-      </TouchableOpacity>
+        </TouchableOpacity>
+      ))}
     </View>
   );
 }
@@ -34,9 +44,9 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
     gap: 20,
+    paddingHorizontal: '20%',
   },
 
   radioWrapper: {
