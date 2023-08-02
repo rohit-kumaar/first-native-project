@@ -1,23 +1,17 @@
-import React, {useState} from 'react';
-import {Button, Modal, StyleSheet, Text, View} from 'react-native';
+import React from 'react';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 
 export default function App() {
-  const [showModal, setShowModal] = useState(false);
-
   return (
     <View style={styles.container}>
-      <Modal transparent={true} visible={showModal} animationType="slide">
-        <View style={styles.modalWrapper}>
-          <View style={styles.modalContent}>
-            <Text>Modal Content</Text>
-            <Button title="Close Modal" onPress={() => setShowModal(false)} />
-          </View>
-        </View>
-      </Modal>
-
-      <View style={styles.btnWrapper}>
-        <Button title="Open Modal" onPress={() => setShowModal(true)} />
-      </View>
+      <Pressable
+        onPress={() => console.warn('On Press Clicked')}
+        onLongPress={() => console.warn('On Long Press Clicked')}
+        // onPressIn={() => console.warn('On Press In Clicked')}
+        // onPressOut={() => console.warn('On Press Out Clicked')}
+      >
+        <Text style={styles.pressableBtn}>Button</Text>
+      </Pressable>
     </View>
   );
 }
@@ -25,25 +19,14 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-
-  btnWrapper: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-
-  modal: {},
-  modalWrapper: {
-    flex: 1,
-    alignItems: 'center',
     justifyContent: 'center',
   },
-  modalContent: {
-    alignItems: 'center',
-    gap: 10,
-    padding: 40,
-    borderRadius: 10,
-    backgroundColor: '#D4E6F1',
-    shadowColor: 'black',
+
+  pressableBtn: {
+    paddingVertical: 10,
+    borderRadius: 4,
+    backgroundColor: '#1F1F1F',
+    color: '#ffffff',
+    textAlign: 'center',
   },
 });
