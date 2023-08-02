@@ -1,32 +1,31 @@
-import React, {useState} from 'react';
-import {Button, StatusBar, StyleSheet, View} from 'react-native';
+import React from 'react';
+import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-export default function () {
-  const [hide, setHide] = useState(false);
-  // const [barStyle, setBarStyle] = useState('default');
-
+export default function App() {
   return (
-    <View style={styles.container}>
-      <StatusBar backgroundColor="#f2b632" barStyle="default" hidden={hide} />
+    <ScrollView style={styles.container}>
+      <Text style={{fontSize: 40}}>Platform : {Platform.OS}</Text>
 
-      <View style={styles.btnWrapper}>
-        <Button title="Toggle Status Bar" onPress={() => setHide(!hide)} />
-        <Button
-          title="Update Style"
-          // onPress={() => setBarStyle('dark-content')}
-        />
-      </View>
-    </View>
+      {Platform.OS == 'android' ? (
+        <View style={{backgroundColor: 'red', width: 100, height: 100}}></View>
+      ) : (
+        <View
+          style={{backgroundColor: 'green', width: 200, height: 200}}></View>
+      )}
+
+      <Text style={styles.RN}>React Native</Text>
+      <Text style={{fontSize: 20}}>{JSON.stringify(Platform)}</Text>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
+    marginBottom: 30,
   },
 
-  btnWrapper: {
-    gap: 10,
+  RN: {
+    fontSize: 40,
+    color: Platform.OS == 'android' ? 'red' : 'green',
   },
 });
