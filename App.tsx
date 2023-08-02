@@ -1,17 +1,21 @@
-import React from 'react';
-import {Pressable, StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {Button, StatusBar, StyleSheet, View} from 'react-native';
 
-export default function App() {
+export default function () {
+  const [hide, setHide] = useState(false);
+  // const [barStyle, setBarStyle] = useState('default');
+
   return (
     <View style={styles.container}>
-      <Pressable
-        onPress={() => console.warn('On Press Clicked')}
-        onLongPress={() => console.warn('On Long Press Clicked')}
-        // onPressIn={() => console.warn('On Press In Clicked')}
-        // onPressOut={() => console.warn('On Press Out Clicked')}
-      >
-        <Text style={styles.pressableBtn}>Button</Text>
-      </Pressable>
+      <StatusBar backgroundColor="#f2b632" barStyle="default" hidden={hide} />
+
+      <View style={styles.btnWrapper}>
+        <Button title="Toggle Status Bar" onPress={() => setHide(!hide)} />
+        <Button
+          title="Update Style"
+          // onPress={() => setBarStyle('dark-content')}
+        />
+      </View>
     </View>
   );
 }
@@ -22,11 +26,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  pressableBtn: {
-    paddingVertical: 10,
-    borderRadius: 4,
-    backgroundColor: '#1F1F1F',
-    color: '#ffffff',
-    textAlign: 'center',
+  btnWrapper: {
+    gap: 10,
   },
 });
