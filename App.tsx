@@ -1,51 +1,46 @@
-import React, {useState} from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import React from 'react';
 import {Button, StyleSheet, Text, View} from 'react-native';
 
+const Stack = createNativeStackNavigator();
+
 export default function App() {
-  const [toggle, setToggle] = useState(false);
-
   return (
-    <View style={styles.container}>
-      {toggle ? (
-        <View style={styles.modalWrapper}>
-          <View style={styles.modal}>
-            <Text>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis
-              odit exercitationem officia consequuntur adipisci quaerat dolorem
-            </Text>
-
-            <Button title="Close Modal" onPress={() => setToggle(false)} />
-          </View>
-        </View>
-      ) : null}
-
-      <Button title="Open Modal" onPress={() => setToggle(true)} />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Home" component={Home} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
+
+const Login = (props: any) => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Login Page</Text>
+      <Button title="Login" onPress={() => props.navigation.navigate('Home')} />
+    </View>
+  );
+};
+
+const Home = () => {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Home Page</Text>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-end',
-  },
-
-  modalWrapper: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.2)',
   },
 
-  modal: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: 20,
-    width: 300,
-    height: 300,
-    paddingVertical: 50,
-    paddingHorizontal: 10,
-    borderRadius: 10,
-    backgroundColor: 'white',
+  text: {
+    fontSize: 30,
   },
 });
