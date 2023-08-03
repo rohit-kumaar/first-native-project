@@ -1,31 +1,51 @@
-import React from 'react';
-import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native';
+import React, {useState} from 'react';
+import {Button, StyleSheet, Text, View} from 'react-native';
 
 export default function App() {
+  const [toggle, setToggle] = useState(false);
+
   return (
-    <ScrollView style={styles.container}>
-      <Text style={{fontSize: 40}}>Platform : {Platform.OS}</Text>
+    <View style={styles.container}>
+      {toggle ? (
+        <View style={styles.modalWrapper}>
+          <View style={styles.modal}>
+            <Text>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis
+              odit exercitationem officia consequuntur adipisci quaerat dolorem
+            </Text>
 
-      {Platform.OS == 'android' ? (
-        <View style={{backgroundColor: 'red', width: 100, height: 100}}></View>
-      ) : (
-        <View
-          style={{backgroundColor: 'green', width: 200, height: 200}}></View>
-      )}
+            <Button title="Close Modal" onPress={() => setToggle(false)} />
+          </View>
+        </View>
+      ) : null}
 
-      <Text style={styles.RN}>React Native</Text>
-      <Text style={{fontSize: 20}}>{JSON.stringify(Platform)}</Text>
-    </ScrollView>
+      <Button title="Open Modal" onPress={() => setToggle(true)} />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 30,
+    flex: 1,
+    justifyContent: 'flex-end',
   },
 
-  RN: {
-    fontSize: 40,
-    color: Platform.OS == 'android' ? 'red' : 'green',
+  modalWrapper: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+  },
+
+  modal: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 20,
+    width: 300,
+    height: 300,
+    paddingVertical: 50,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    backgroundColor: 'white',
   },
 });
