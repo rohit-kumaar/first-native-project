@@ -1,11 +1,17 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {Button, StyleSheet} from 'react-native';
+import {Home} from './components/Home';
+import {Login} from './components/Login';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+  const menu = () => {
+    console.warn('Menu Clicked');
+  };
+
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -18,45 +24,13 @@ export default function App() {
         <Stack.Screen
           name="Login"
           component={Login}
-          // options={{
-          //   title: 'User Login',
-          //   headerStyle: {
-          //     backgroundColor: '#032030',
-          //   },
-          //   headerTintColor: '#ffffff',
-          // }}
+          options={{
+            headerRight: () => <Button title="Menu" onPress={menu} />,
+            title: 'Login',
+          }}
         />
         <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-const Login = (props: any) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Login Page</Text>
-      <Button title="Login" onPress={() => props.navigation.navigate('Home')} />
-    </View>
-  );
-};
-
-const Home = () => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Home Page</Text>
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  text: {
-    fontSize: 30,
-  },
-});
