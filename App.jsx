@@ -1,46 +1,51 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  Button,
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 
 export default function App() {
-  const [data, setData] = useState([]);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
 
-  const API_URL = 'https://jsonplaceholder.typicode.com/users';
+  const API_URL = 'http://10.0.2.2:3000/users';
 
-  async function apiData() {
-    let res = await fetch(API_URL);
+  async function postData() {
+    let res = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({name, email}),
+    });
+
     res = await res.json();
-    setData(res);
+    if (res) console.warn('User is created');
   }
 
-  useEffect(() => {
-    apiData();
-  }, []);
+  const handleSubmit = () => {
+    postData();
+  };
 
   return (
-    <ScrollView style={styles.container}>
-      {data.length ? (
-        // data.map(user => (
-        //   <View style={styles.user}>
-        //     <Text>User ID : {user.id}</Text>
-        //     <Text>User Name : {user.name}</Text>
-        //     <Text>User Email : {user.email}</Text>
-        //   </View>
-        // ))
-
-        <FlatList
-          data={data}
-          renderItem={({item}) => (
-            <View style={styles.text}>
-              <Text>User ID : {item.id}</Text>
-              <Text>User Name : {item.name}</Text>
-              <Text>User Email : {item.email}</Text>
-            </View>
-          )}
-        />
-      ) : (
-        <Text>No Data Found </Text>
-      )}
-    </ScrollView>
+    <View style={styles.container}>
+      <TextInput
+        placeholder="Enter Name"
+        name={name}
+        onChangeText={text => setName(text)}
+      />
+      <TextInput
+        placeholder="Enter Email"
+        name={email}
+        onChangeText={text => setEmail(text)}
+      />
+      <Button title="Create User" onPress={handleSubmit} />
+    </View>
   );
 }
 
@@ -48,17 +53,5 @@ const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 15,
     marginVertical: 20,
-  },
-
-  user: {
-    paddingVertical: 10,
-  },
-
-  text: {
-    padding: 10,
-    marginBottom: 10,
-    fontSize: 20,
-    backgroundColor: '#FFB6C1',
-    color: 'white',
   },
 });
