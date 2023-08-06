@@ -1,46 +1,10 @@
-import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-
-const Tab = createMaterialTopTabNavigator();
+import { Text, View } from 'react-native';
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name="Login" component={Login} />
-        <Tab.Screen name="Sign up" component={SignUp} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <View>
+      <Text>App</Text>
+    </View>
   );
 }
-
-const Login = (props: any) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Login</Text>
-      {/* <Button title="Login" onPress={() => props.navigation.navigate('Home')} /> */}
-    </View>
-  );
-};
-
-const SignUp = () => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Sign up</Text>
-    </View>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  text: {
-    fontSize: 30,
-  },
-});
