@@ -19,14 +19,6 @@ export default function App() {
   return (
     <ScrollView style={styles.container}>
       {data.length ? (
-        // data.map(user => (
-        //   <View style={styles.user}>
-        //     <Text>User ID : {user.id}</Text>
-        //     <Text>User Name : {user.name}</Text>
-        //     <Text>User Email : {user.email}</Text>
-        //   </View>
-        // ))
-
         <FlatList
           data={data}
           renderItem={({item}) => (
