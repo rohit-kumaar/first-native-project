@@ -1,23 +1,22 @@
 import axios from 'axios';
 import React, {useEffect, useState} from 'react';
 import {
+  Button,
   FlatList,
-  ScrollView,
+  Modal,
   StyleSheet,
   Text,
+  TextInput,
   TouchableHighlight,
   View,
-  Modal,
-  Button,
-  TextInput,
 } from 'react-native';
+
+const API_URL = 'http://10.0.2.2:3000/users';
 
 export default function App() {
   const [data, setData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(undefined);
-
-  const API_URL = 'http://10.0.2.2:3000/users';
 
   async function apiData() {
     let res = await fetch(API_URL);
@@ -46,7 +45,7 @@ export default function App() {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       {data.length ? (
         <FlatList
           data={data}
@@ -79,9 +78,13 @@ export default function App() {
       )}
 
       <Modal transparent={true} visible={showModal} animationType="slide">
-        <UserModal setShowModal={setShowModal} selectedUser={selectedUser} />
+        <UserModal
+          setShowModal={setShowModal}
+          selectedUser={selectedUser}
+          apiData={apiData}
+        />
       </Modal>
-    </ScrollView>
+    </View>
   );
 }
 
@@ -97,16 +100,38 @@ function UserModal(props) {
     }
   }, [props.selectedUser]);
 
+  const updateUser = () => {
+    const id = props.selectedUser.id;
+
+    axios
+      .put(`${API_URL}/${id}`, {name, email})
+      .then(() => {
+        props.apiData();
+        props.setShowModal(false);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   return (
     <View style={styles.modalWrapper}>
       <View style={styles.modalContent}>
         <Text>Modal Content</Text>
 
-        <TextInput style={styles.inputText} value={name} />
-        <TextInput style={styles.inputText} value={email} />
+        <TextInput
+          style={styles.inputText}
+          value={name}
+          onChangeText={text => setName(text)}
+        />
+        <TextInput
+          style={styles.inputText}
+          value={email}
+          onChangeText={text => setEmail(text)}
+        />
 
         <View style={{flexDirection: 'row', gap: 10}}>
-          <Button title="Update" />
+          <Button title="Update" onPress={updateUser} />
           <Button title="Close" onPress={() => props.setShowModal(false)} />
         </View>
       </View>
