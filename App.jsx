@@ -1,140 +1,46 @@
 import axios from 'axios';
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
 import {
-  Button,
-  FlatList,
-  Modal,
   StyleSheet,
   Text,
   TextInput,
-  TouchableHighlight,
-  View,
+  View
 } from 'react-native';
 
 const API_URL = 'http://10.0.2.2:3000/users';
+const API_URL_WITH_SEARCH_QUERY = `${API_URL}?q=`;
 
 export default function App() {
-  const [data, setData] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(undefined);
+  const [userData, setUserData] = useState([]);
 
-  async function apiData() {
-    let res = await fetch(API_URL);
-    res = await res.json();
-    setData(res);
-  }
-
-  useEffect(() => {
-    apiData();
-  }, []);
-
-  const deleteUser = id => {
+  const searchUser = text => {
     axios
-      .delete(`${API_URL}/${id}`)
-      .then(() => {
-        apiData();
+      .get(`${API_URL_WITH_SEARCH_QUERY}${text}`)
+      .then(res => {
+        setUserData(res.data);
       })
       .catch(err => {
         console.warn(err);
       });
   };
 
-  const updateUser = userData => {
-    setShowModal(true);
-    setSelectedUser(userData);
-  };
-
   return (
     <View style={styles.container}>
-      {data.length ? (
-        <FlatList
-          data={data}
-          renderItem={({item}) => (
-            <View style={styles.textWrapper}>
-              <Text>User ID : {item.id}</Text>
-              <Text>User Name : {item.name}</Text>
-              <Text>User Email : {item.email}</Text>
+      <TextInput
+        style={styles.inputText}
+        onChangeText={text => searchUser(text)}
+        placeholder="Search..."
+      />
 
-              <TouchableHighlight>
-                <Text
-                  style={[styles.btn, styles.success]}
-                  onPress={() => updateUser(item)}>
-                  Update
-                </Text>
-              </TouchableHighlight>
-
-              <TouchableHighlight>
-                <Text
-                  style={[styles.btn, styles.danger]}
-                  onPress={() => deleteUser(item.id)}>
-                  Delete
-                </Text>
-              </TouchableHighlight>
-            </View>
-          )}
-        />
+      {userData.length ? (
+        userData.map(user => (
+          <View key={user.id}>
+            <Text style={styles.textWrapper}>{user.name}</Text>
+          </View>
+        ))
       ) : (
-        <Text>No Data Found </Text>
+        <Text>No Data Available</Text>
       )}
-
-      <Modal transparent={true} visible={showModal} animationType="slide">
-        <UserModal
-          setShowModal={setShowModal}
-          selectedUser={selectedUser}
-          apiData={apiData}
-        />
-      </Modal>
-    </View>
-  );
-}
-
-function UserModal(props) {
-  // console.warn(props.selectedUser);
-  const [name, setName] = useState(undefined);
-  const [email, setEmail] = useState(undefined);
-
-  useEffect(() => {
-    if (props.selectedUser) {
-      setName(props.selectedUser.name);
-      setEmail(props.selectedUser.email);
-    }
-  }, [props.selectedUser]);
-
-  const updateUser = () => {
-    const id = props.selectedUser.id;
-
-    axios
-      .put(`${API_URL}/${id}`, {name, email})
-      .then(() => {
-        props.apiData();
-        props.setShowModal(false);
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
-  return (
-    <View style={styles.modalWrapper}>
-      <View style={styles.modalContent}>
-        <Text>Modal Content</Text>
-
-        <TextInput
-          style={styles.inputText}
-          value={name}
-          onChangeText={text => setName(text)}
-        />
-        <TextInput
-          style={styles.inputText}
-          value={email}
-          onChangeText={text => setEmail(text)}
-        />
-
-        <View style={{flexDirection: 'row', gap: 10}}>
-          <Button title="Update" onPress={updateUser} />
-          <Button title="Close" onPress={() => props.setShowModal(false)} />
-        </View>
-      </View>
     </View>
   );
 }
@@ -145,10 +51,6 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
 
-  user: {
-    paddingVertical: 10,
-  },
-
   textWrapper: {
     padding: 10,
     marginBottom: 10,
@@ -157,50 +59,10 @@ const styles = StyleSheet.create({
     color: 'white',
   },
 
-  btnWrapper: {
-    flexDirection: 'row',
-  },
-
-  btn: {
-    paddingVertical: 8,
-    textAlign: 'center',
-    fontSize: 20,
-    color: 'white',
-    borderRadius: 10,
-    margin: 10,
-    shadowColor: 'black',
-    elevation: 10,
-  },
-
-  success: {
-    backgroundColor: '#198754',
-  },
-
-  danger: {
-    backgroundColor: '#dc3545',
-  },
-
-  modalWrapper: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  modalContent: {
-    alignItems: 'center',
-    gap: 10,
-    paddingVertical: 40,
-    paddingHorizontal: 20,
-    borderRadius: 10,
-    backgroundColor: '#D4E6F1',
-    shadowColor: 'black',
-    elevation: 5,
-  },
-
   inputText: {
-    width: 300,
+    width: '100%',
     height: 40,
-    margin: 12,
+    marginVertical: 12,
     borderWidth: 1,
     padding: 10,
   },
