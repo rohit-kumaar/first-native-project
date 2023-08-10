@@ -1,11 +1,6 @@
 import axios from 'axios';
-import React, { useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View
-} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, Text, TextInput, View} from 'react-native';
 
 const API_URL = 'http://10.0.2.2:3000/users';
 const API_URL_WITH_SEARCH_QUERY = `${API_URL}?q=`;
